@@ -1,7 +1,7 @@
 package jdbc.w_annotations;
 
-import jdbc.c_jdbctemplate.JdbcTemplateAccountingService;
 import jdbc.JdbcConfiguration;
+import jdbc.c_jdbctemplate.JdbcTemplateAccountingService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.support.TransactionTemplate;

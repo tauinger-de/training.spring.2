@@ -17,21 +17,24 @@ Lassen Sie Ihre Anwendung folgendes Interface implementieren:
 ````java
 public interface BankingApi {
     void deposit(int accountNumber, int amount);
+
     void withdraw(int accountNumber, int amount);
+
     void transfer(int fromAccountNumber, int toAccountNumber, int amount);
 }
 
 ````
 
 Details:
+
 - `deposit()` und `withdraw()` sollen eine Exception werfen, wenn es den Account nicht gibt
 - implementieren Sie die `transfer()` so, dass erst ein deposit, dann ein withdraw
-aufgerufen wird
+  aufgerufen wird
 
 Welches Problem tritt auf, wenn man auf einen Account überweist, den es gar nicht gibt?
 
 ## 4) Trx
 
-Legen Sie eine 
+Legen Sie eine
 Ergänzen Sie die Anwendung um Transaktionen, sodass ein Fehler in der
 `transfer()` Methode keinen inkonsistenten Zustand hinterlässt
