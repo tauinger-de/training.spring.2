@@ -1,6 +1,6 @@
 package jdbc.t_trx_manually;
 
-import jdbc.AccountingService;
+import jdbc.c_jdbctemplate.JdbcTemplateAccountingService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -14,9 +14,9 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
 public class LogicRunner implements CommandLineRunner {
 
     private final PlatformTransactionManager trxMgr;
-    private final AccountingService accountingService;
+    private final JdbcTemplateAccountingService accountingService;
 
-    public LogicRunner(PlatformTransactionManager trxMgr, AccountingService accountingService) {
+    public LogicRunner(PlatformTransactionManager trxMgr, JdbcTemplateAccountingService accountingService) {
         this.trxMgr = trxMgr;
         this.accountingService = accountingService;
     }

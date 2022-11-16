@@ -1,11 +1,11 @@
 package jdbc.w_annotations;
 
-import jdbc.AccountingService;
+import jdbc.c_jdbctemplate.JdbcTemplateAccountingService;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
 
-public class TrandactionalAccountingService extends AccountingService {
+public class TrandactionalAccountingService extends JdbcTemplateAccountingService {
     public TrandactionalAccountingService(DataSource dataSource) {
         super(dataSource);
     }

@@ -1,6 +1,6 @@
 package jdbc.w_annotations;
 
-import jdbc.AccountingService;
+import jdbc.c_jdbctemplate.JdbcTemplateAccountingService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -9,9 +9,9 @@ import org.springframework.stereotype.Component;
 @Order(100)
 public class LogicRunner implements CommandLineRunner {
 
-    private final AccountingService accountingService;
+    private final JdbcTemplateAccountingService accountingService;
 
-    public LogicRunner(AccountingService accountingService) {
+    public LogicRunner(JdbcTemplateAccountingService accountingService) {
         this.accountingService = accountingService;
     }
 

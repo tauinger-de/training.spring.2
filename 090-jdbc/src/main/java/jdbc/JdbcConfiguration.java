@@ -1,6 +1,7 @@
 package jdbc;
 
 import core.h2.H2Server;
+import jdbc.c_jdbctemplate.JdbcTemplateAccountingService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,8 +14,8 @@ import javax.sql.DataSource;
 public class JdbcConfiguration {
 
     @Bean
-    public AccountingService accountingService() {
-        return new AccountingService(dataSource());
+    public JdbcTemplateAccountingService accountingService() {
+        return new JdbcTemplateAccountingService(dataSource());
     }
 
     @Bean

@@ -1,6 +1,6 @@
 package jdbc.v_trx_proxyfactory;
 
-import jdbc.AccountingService;
+import jdbc.c_jdbctemplate.JdbcTemplateAccountingService;
 import jdbc.JdbcConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,13 +18,13 @@ public class JdbcConfiguration090v extends JdbcConfiguration {
 
     @Override
     @Bean
-    public AccountingService accountingService() {
+    public JdbcTemplateAccountingService accountingService() {
         var factoryBean = new TransactionProxyFactoryBean();
         factoryBean.setTarget(super.accountingService());
         factoryBean.setTransactionManager(transactionManager());
         // this causes all methods to have trx-propagation PROPAGATION_REQUIRED
         factoryBean.setTransactionAttributeSource(new MatchAlwaysTransactionAttributeSource());
         factoryBean.afterPropertiesSet();
-        return (AccountingService) factoryBean.getObject();
+        return (JdbcTemplateAccountingService) factoryBean.getObject();
     }
 }
