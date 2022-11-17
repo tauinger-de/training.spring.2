@@ -30,7 +30,7 @@ public class JdbcConfiguration {
 
     @Bean
     public DataSource dataSource() {
-        return new DriverManagerDataSource("jdbc:h2:tcp://localhost:9092/~/training.spring.2");
+        return new DriverManagerDataSource("jdbc:h2:tcp://localhost:9092/~/training.spring.090-jdbc");
     }
 
     @Bean

@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Bean;
 public class Main090a {
 
     public static void main(String[] args) {
-        System.setProperty("spring.datasource.url", "jdbc:h2:tcp://localhost:9092/~/training.spring.2");
+        System.setProperty("spring.datasource.url", "jdbc:h2:tcp://localhost:9092/~/training.spring.090-jdbc");
         SpringApplication.run(Main090a.class);
     }
 

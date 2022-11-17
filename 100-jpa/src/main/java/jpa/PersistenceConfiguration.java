@@ -7,9 +7,10 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
-import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.JpaTransactionManager;
+import org.springframework.orm.jpa.LocalEntityManagerFactoryBean;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import javax.sql.DataSource;
 
@@ -33,24 +34,25 @@ public class PersistenceConfiguration {
     }
 
     @Bean
-    public DataSourceTransactionManager transactionManager() {
-        return new DataSourceTransactionManager(dataSource());
+    public JpaTransactionManager transactionManager() {
+        var managerFactory = entityManagerFactoryBean(dataSource()).getObject();
+
+        JpaTransactionManager jpaTransactionManager = new JpaTransactionManager();
+        jpaTransactionManager.setEntityManagerFactory(managerFactory);
+        return jpaTransactionManager;
     }
 
     @Bean
-    LocalContainerEntityManagerFactoryBean entityManagerFactoryBean(DataSource dataSource) {
-        LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
-
-        factory.setDataSource(dataSource);
+    public LocalEntityManagerFactoryBean entityManagerFactoryBean(DataSource dataSource) {
+        LocalEntityManagerFactoryBean factory = new LocalEntityManagerFactoryBean();
         factory.setPersistenceProviderClass(HibernatePersistenceProvider.class);
-        factory.setPersistenceXmlLocation("META-INF/persistence.xml");
-
-        // we could also set properties here programmatically instead of using persistence.xml
-//        Properties properties = new Properties();
-//        properties.setProperty("javax.persistence.schema-generation.database.action", "none");
-//        factory.setJpaProperties(properties);
-
         return factory;
+    }
+
+
+    @Bean
+    public TransactionTemplate transactionTemplate() {
+        return new TransactionTemplate(this.transactionManager());
     }
 
 }
