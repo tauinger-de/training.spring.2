@@ -19,6 +19,7 @@
         <module>090-jdbc</module>
         <module>100-jpa</module>
         <module>105-data-jpa</module>
+        <module>110-testing</module>
         <module>core</module>
         <module>exrc-accounting</module>
     </modules>
