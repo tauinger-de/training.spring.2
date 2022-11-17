@@ -18,6 +18,7 @@
     <modules>
         <module>090-jdbc</module>
         <module>100-jpa</module>
+        <module>105-data-jpa</module>
         <module>core</module>
         <module>exrc-accounting</module>
     </modules>
