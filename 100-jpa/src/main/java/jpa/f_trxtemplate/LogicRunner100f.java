@@ -1,4 +1,4 @@
-package jpa.d_with_spring;
+package jpa.f_trxtemplate;
 
 import jpa.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +11,7 @@ import javax.persistence.PersistenceContext;
 import java.time.LocalDate;
 
 @Component
-public class LogicRunner implements CommandLineRunner {
+public class LogicRunner100f implements CommandLineRunner {
 
     private EntityManager entityManager;
 
@@ -24,11 +24,12 @@ public class LogicRunner implements CommandLineRunner {
     }
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         transactionTemplate.executeWithoutResult(x -> {
             entityManager.persist(
-                    new Customer("Enrico Pallazzo 100d", LocalDate.of(1966, 2, 3))
+                    new Customer("Enrico Pallazzo 100f", LocalDate.of(1966, 2, 3))
             );
         });
     }
 }
+

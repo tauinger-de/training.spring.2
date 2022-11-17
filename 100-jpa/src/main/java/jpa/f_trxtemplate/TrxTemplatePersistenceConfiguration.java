@@ -1,4 +1,4 @@
-package jpa;
+package jpa.f_trxtemplate;
 
 import core.h2.H2Server;
 import core.h2.SchemaScriptRunner;
@@ -15,7 +15,7 @@ import org.springframework.transaction.support.TransactionTemplate;
 import javax.sql.DataSource;
 
 @Configuration
-public class PersistenceConfiguration {
+public class TrxTemplatePersistenceConfiguration {
 
     @Bean
     public CommandLineRunner schemaScriptRunner() {
