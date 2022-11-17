@@ -1,4 +1,4 @@
-package jdbc.v_trx_proxyfactory;
+package jdbc.v_trxproxyfactorybean;
 
 import jdbc.JdbcConfiguration;
 import jdbc.c_jdbctemplate.JdbcTemplateAccountingService;

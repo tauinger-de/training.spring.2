@@ -1,4 +1,4 @@
-package jdbc.v_trx_proxyfactory;
+package jdbc.u_trxtemplate;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -7,10 +7,11 @@ import org.springframework.context.annotation.Configuration;
 @SpringBootApplication
 @Configuration
 //@Import(CoreCtxConfiguration.class)
-public class Main090v {
+public class Main090u {
 
     public static void main(String[] args) {
-        SpringApplication.run(Main090v.class);
+        SpringApplication.run(Main090u.class);
     }
+
 
 }

@@ -1,4 +1,4 @@
-package jdbc.u_trx_template;
+package jdbc.u_trxtemplate;
 
 import jdbc.JdbcConfiguration;
 import org.springframework.context.annotation.Bean;
