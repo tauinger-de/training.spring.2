@@ -10,7 +10,7 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>excr-accounting</artifactId>
+    <artifactId>exrc-accounting</artifactId>
 
     <dependencies>
         <dependency>
