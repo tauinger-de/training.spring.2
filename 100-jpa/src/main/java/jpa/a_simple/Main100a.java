@@ -1,38 +1,33 @@
 package jpa.a_simple;
 
-import org.hibernate.jpa.HibernatePersistenceProvider;
+import jpa.Customer;
+import jpa.PersistenceConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.context.annotation.Import;
 
 import javax.persistence.EntityManagerFactory;
-import javax.sql.DataSource;
-import java.util.Properties;
+import java.time.LocalDate;
 
 @SpringBootApplication
+@Import(PersistenceConfiguration.class)
 public class Main100a {
 
     public static void main(String[] args) {
         var context = SpringApplication.run(Main100a.class);
 
         EntityManagerFactory emf = context.getBean(EntityManagerFactory.class);
-        System.out.println(emf);
-        var resultList = emf.createEntityManager().createNativeQuery("SHOW TABLES").getResultList();
+
+//        var resultList = emf.createEntityManager().createNativeQuery("SHOW TABLES").getResultList();
+//        resultList.forEach(r -> System.out.println(r));
+
+        var entityManager = emf.createEntityManager();
+        var trx = entityManager.getTransaction();
+        trx.begin();
+        entityManager.persist(
+                new Customer("Enrico Pallazzo", LocalDate.of(1966, 2, 3))
+        );
+        trx.commit();
     }
 
-    @Bean
-    LocalContainerEntityManagerFactoryBean entityManagerFactoryBean(DataSource dataSource) {
-        LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
-
-        factory.setDataSource(dataSource);
-        factory.setPersistenceProviderClass(HibernatePersistenceProvider.class);
-        factory.setPersistenceXmlLocation("META-INF/persistence.xml");
-
-        Properties properties = new Properties();
-        properties.setProperty("javax.persistence.schema-generation.database.action", "create");
-        factory.setJpaProperties(properties);
-
-        return factory;
-    }
 }
