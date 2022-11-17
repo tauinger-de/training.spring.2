@@ -35,6 +35,5 @@ Welches Problem tritt auf, wenn man auf einen Account überweist, den es gar nic
 
 ## 4) Trx
 
-Legen Sie eine
 Ergänzen Sie die Anwendung um Transaktionen, sodass ein Fehler in der
 `transfer()` Methode keinen inkonsistenten Zustand hinterlässt
