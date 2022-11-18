@@ -16,6 +16,7 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>080-boot</module>
         <module>090-jdbc</module>
         <module>100-jpa</module>
         <module>105-data-jpa</module>
