@@ -2,6 +2,8 @@ package core.h2;
 
 import org.h2.tools.RunScript;
 import org.h2.tools.Server;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.NestedExceptionUtils;
 import org.springframework.core.io.Resource;
 
@@ -14,6 +16,8 @@ import java.sql.SQLException;
  * Provides support for executing SQL scripts.
  */
 public class H2Server implements AutoCloseable {
+
+    private static final Logger LOG = LoggerFactory.getLogger(H2Server.class);
 
     private Server server;
 
@@ -29,13 +33,13 @@ public class H2Server implements AutoCloseable {
     }
 
     public H2Server start() {
-        System.out.println("Launching H2 TCP Server");
+        LOG.debug("Launching H2 TCP Server on port {}", port);
         try {
             server = Server.createTcpServer("-tcp", "-ifNotExists", "-tcpPort", String.valueOf(port)).start();
         } catch (SQLException e) {
             var rootCause = NestedExceptionUtils.getRootCause(e);
             if (rootCause != null && rootCause.getMessage().equals("Address already in use: bind")) {
-                System.out.println("Server seems to be running already (maybe in some other context?)");
+                LOG.warn("Server seems to be running already (maybe in some other context?)");
             } else {
                 throw new IllegalStateException("Failed to launch H2 TCP server", e);
             }
@@ -45,7 +49,7 @@ public class H2Server implements AutoCloseable {
 
     public void executeScript(DataSource dataSource, Resource scriptResource) {
         try {
-            System.out.printf("Running schema script: %s\n", scriptResource.getURI());
+            LOG.info("Running schema script: {}", scriptResource.getURI());
             RunScript.execute(
                     dataSource.getConnection(),
                     new InputStreamReader(scriptResource.getInputStream()));
@@ -56,7 +60,7 @@ public class H2Server implements AutoCloseable {
 
     public void stop() {
         if (this.server != null) {
-            System.out.println("Stopping H2 TCP Server");
+            LOG.debug("Stopping H2 TCP Server");
             this.server.stop();
         }
     }
