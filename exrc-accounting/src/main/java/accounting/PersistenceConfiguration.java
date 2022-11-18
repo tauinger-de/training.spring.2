@@ -11,8 +11,6 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.SQLException;
 
 @Configuration
 public class PersistenceConfiguration {
@@ -35,11 +33,6 @@ public class PersistenceConfiguration {
     @Bean
     public CommandLineRunner scriptRunner(DataSource dataSource, H2Server h2Server) {
         return new ScriptRunner(dataSource, h2Server, new ClassPathResource("create.sql"));
-    }
-
-    @Bean
-    public Connection connection(DataSource dataSource) throws SQLException {
-        return dataSource.getConnection();
     }
 
 }

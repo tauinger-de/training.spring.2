@@ -1,8 +1,18 @@
 package accounting;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "accounts")
 public class Account {
 
+    @Id
+    @Column(name = "accnt_nmbr", length = 20)
     private String number;
+
     private int balance;
 
     public Account() {

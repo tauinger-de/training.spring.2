@@ -1,11 +1,12 @@
 package accounting;
 
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.sql.SQLException;
+import java.util.UUID;
 
 @SpringBootTest
 class AccountServiceTest {
@@ -13,8 +14,16 @@ class AccountServiceTest {
     @Autowired
     private AccountService accountService;
 
+    @Autowired
+    private AccountRepository accountRepository;
+
+    @BeforeEach
+    public void clearAccountsTable() {
+        accountRepository.deleteAll();
+    }
+
     @Test
-    void databaseInteraction() throws SQLException {
+    void databaseInteraction() {
         // create two accounts
         accountService.insertAccount(new Account("4711"));
         accountService.insertAccount(new Account("4712"));
@@ -38,9 +47,9 @@ class AccountServiceTest {
     }
 
     @Test
-    void insertAndFindAccount() throws SQLException {
+    void insertAndFindAccount() {
         // given
-        var accountNumber = "123-456-789";
+        var accountNumber = newAccountNumber();
 
         // when
         accountService.insertAccount(new Account(accountNumber));
@@ -52,18 +61,47 @@ class AccountServiceTest {
     }
 
     @Test
-    void concurrentFindAccount() throws SQLException {
+    void insertAndFindAccount_failsForBadAccountNumber() {
         // given
-        var accountNumber = "123-456-789";
+        var accountNumber1 = "123-456-789";
+        var accountNumber2 = "asd adsasd asd";
+
+        // when
+        accountService.insertAccount(new Account(accountNumber1));
+        Assertions.assertThatThrownBy(
+                () -> accountService.findAccount(accountNumber2)
+        ).isInstanceOf(IllegalStateException.class);
+    }
+
+    @Test
+    void concurrentFindAccount() {
+        // given
+        var accountNumber = newAccountNumber();
         accountService.insertAccount(new Account(accountNumber));
 
         // when
         Runnable findRunner = () -> {
-            for (int n=0; n<100; n++) {
+            for (int n = 0; n < 100; n++) {
                 accountService.findAccount(accountNumber);
             }
         };
         new Thread(findRunner).start();
         new Thread(findRunner).start();
+    }
+
+    @Test
+    void insertAccount__failsForDuplicateAccountNumber() {
+        // given
+        var account = new Account(newAccountNumber());
+
+        // when
+        accountService.insertAccount(account);
+        Assertions.assertThatThrownBy(
+                () -> accountService.insertAccount(account)
+        ).isInstanceOf(IllegalStateException.class);
+    }
+
+    private String newAccountNumber() {
+        return UUID.randomUUID().toString().substring(0, 20);
     }
 }
