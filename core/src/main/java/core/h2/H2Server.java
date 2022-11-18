@@ -45,7 +45,7 @@ public class H2Server implements AutoCloseable {
 
     public void executeScript(DataSource dataSource, Resource scriptResource) {
         try {
-            System.out.println("Running schema script " + scriptResource);
+            System.out.printf("Running schema script: %s\n", scriptResource.getURI());
             RunScript.execute(
                     dataSource.getConnection(),
                     new InputStreamReader(scriptResource.getInputStream()));
