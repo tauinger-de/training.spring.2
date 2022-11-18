@@ -9,6 +9,7 @@
     </parent>
 
     <artifactId>testing</artifactId>
+    <name>110-testing</name>
 
     <dependencies>
         <dependency>
@@ -30,5 +31,18 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <!-- disable the Spring-Boot plugin since this module is not a single Spring-Boot Application -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
