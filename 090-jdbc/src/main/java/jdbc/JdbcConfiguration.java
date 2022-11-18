@@ -1,6 +1,7 @@
 package jdbc;
 
 import core.h2.H2Server;
+import core.jdbc.ConnectionTestRunner;
 import jdbc.c_jdbctemplate.JdbcTemplateAccountingService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;

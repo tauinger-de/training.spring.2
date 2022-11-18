@@ -1,4 +1,4 @@
-package jdbc;
+package core.jdbc;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;

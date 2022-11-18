@@ -1,7 +1,7 @@
 package jpa.t_transactional;
 
 import core.h2.H2Server;
-import core.h2.SchemaScriptRunner;
+import core.h2.ScriptRunner;
 import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -20,7 +20,7 @@ public class TransactionalPersistenceConfiguration {
 
     @Bean
     public CommandLineRunner schemaScriptRunner() {
-        return new SchemaScriptRunner(dataSource(), h2Server());
+        return new ScriptRunner(dataSource(), h2Server());
     }
 
     @Bean(initMethod = "start", destroyMethod = "stop")

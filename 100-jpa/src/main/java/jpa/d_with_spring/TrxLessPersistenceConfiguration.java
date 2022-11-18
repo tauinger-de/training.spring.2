@@ -1,7 +1,7 @@
 package jpa.d_with_spring;
 
 import core.h2.H2Server;
-import core.h2.SchemaScriptRunner;
+import core.h2.ScriptRunner;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,7 +17,7 @@ public class TrxLessPersistenceConfiguration {
 
     @Bean
     public CommandLineRunner schemaScriptRunner() {
-        return new SchemaScriptRunner(dataSource(), h2Server());
+        return new ScriptRunner(dataSource(), h2Server());
     }
 
     @Bean(initMethod = "start", destroyMethod = "stop")
