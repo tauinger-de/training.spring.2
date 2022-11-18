@@ -23,7 +23,7 @@ public class PrintBeansRunner implements CommandLineRunner {
         List<String> beanNames = Arrays.asList(factory.getBeanDefinitionNames());
         Collections.sort(beanNames);
         for (String name : beanNames) {
-            out.printf("  - %s : %s\n", name, factory.getType(name).getName());
+            out.printf("  - %s : \u001B[36m%s\u001B[0m\n", name, factory.getType(name).getName());
         }
     }
 }
