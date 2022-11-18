@@ -24,12 +24,17 @@ public class Main100a {
         var entityManager = entityManagerFactory.createEntityManager();
         var trx = entityManager.getTransaction();
         trx.begin();
+
         entityManager.persist(
                 new Customer("Enrico Pallazzo", LocalDate.of(1966, 2, 3))
         );
         entityManager.persist(
                 new Customer("Niko Newborn", LocalDate.now())
         );
+
+        var resultList = entityManager.createQuery("SELECT c FROM Customer c", Customer.class).getResultList();
+        resultList.forEach(System.out::println);
+
         trx.commit();
 
         // wait so we can check database content with tool
