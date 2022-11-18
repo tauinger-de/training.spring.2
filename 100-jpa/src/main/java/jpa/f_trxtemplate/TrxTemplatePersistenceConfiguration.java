@@ -7,6 +7,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalEntityManagerFactoryBean;
@@ -19,7 +20,7 @@ public class TrxTemplatePersistenceConfiguration {
 
     @Bean
     public CommandLineRunner schemaScriptRunner() {
-        return new ScriptRunner(dataSource(), h2Server());
+        return new ScriptRunner(dataSource(), h2Server(), new ClassPathResource("schema.sql"));
     }
 
     @Bean(initMethod = "start", destroyMethod = "stop")
