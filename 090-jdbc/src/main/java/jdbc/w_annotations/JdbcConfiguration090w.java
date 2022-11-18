@@ -17,6 +17,6 @@ public class JdbcConfiguration090w extends JdbcConfiguration {
     @Override
     @Bean
     public JdbcTemplateAccountingService accountingService() {
-        return new TrandactionalAccountingService(dataSource());
+        return new TransactionalAccountingService(dataSource());
     }
 }

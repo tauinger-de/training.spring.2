@@ -5,8 +5,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
 
-public class TrandactionalAccountingService extends JdbcTemplateAccountingService {
-    public TrandactionalAccountingService(DataSource dataSource) {
+public class TransactionalAccountingService extends JdbcTemplateAccountingService {
+    public TransactionalAccountingService(DataSource dataSource) {
         super(dataSource);
     }
 
