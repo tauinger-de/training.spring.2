@@ -2,21 +2,23 @@ package accounting;
 
 public class Account {
 
-    private int number;
+    private String number;
     private int balance;
 
     public Account() {
+        this("<unknown>");
     }
 
-    public Account(int number) {
+    public Account(String number) {
         this.number = number;
+        this.balance = 0;
     }
 
-    public int getNumber() {
+    public String getNumber() {
         return this.number;
     }
 
-    public void setNumber(int number) {
+    public void setNumber(String number) {
         this.number = number;
     }
 
@@ -30,6 +32,6 @@ public class Account {
 
     @Override
     public String toString() {
-        return this.getClass().getName() + " [" + this.number + ", " + this.balance + "]";
+        return this.getClass().getName() + " [number: " + this.number + ", balance:" + this.balance + "]";
     }
 }
