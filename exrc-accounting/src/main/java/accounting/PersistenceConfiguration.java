@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
@@ -23,6 +24,7 @@ public class PersistenceConfiguration {
     }
 
     @Bean
+    @DependsOn("h2Server")
     public DataSource dataSource(@Value("${h2.url}") String connectionUrl) {
         return new DriverManagerDataSource(connectionUrl);
     }

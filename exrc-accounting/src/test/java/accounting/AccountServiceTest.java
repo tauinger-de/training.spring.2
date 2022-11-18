@@ -54,7 +54,7 @@ class AccountServiceTest {
     @Test
     void concurrentFindAccount() throws SQLException {
         // given
-        var accountNumber = "123-456-789";
+        var accountNumber = "444-333-222";
         accountService.insertAccount(new Account(accountNumber));
 
         // when
