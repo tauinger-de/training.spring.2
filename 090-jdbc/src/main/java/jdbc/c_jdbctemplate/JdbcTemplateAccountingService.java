@@ -19,11 +19,12 @@ public class JdbcTemplateAccountingService implements AccountingService {
     }
 
     public void insertAccount(String accountNumber, int balance) {
-        new JdbcTemplate(dataSource).update(
+        System.out.printf("About to insert account with number '%s' and balance %d\n", accountNumber, balance);
+        var rowCount = new JdbcTemplate(dataSource).update(
                 "INSERT INTO accounts VALUES (?, ?)",
                 accountNumber, balance
         );
-        System.out.println("Added row to accounts");
+        System.out.printf("Added %d row(s)\n", rowCount);
     }
 
     public void insertAccountWithFault(String accountNumber, int balance) {

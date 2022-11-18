@@ -8,8 +8,7 @@ import org.springframework.context.annotation.Import;
 
 @SpringBootApplication
 @Configuration
-@Import(JdbcConfiguration.class)
-//@Import(CoreCtxConfiguration.class)
+@Import({JdbcConfiguration.class /*, CoreCtxConfiguration.class */})
 public class Main090t {
 
     public static void main(String[] args) {

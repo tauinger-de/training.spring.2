@@ -23,6 +23,11 @@ public class JdbcConfiguration {
         return new SchemaScriptRunner(dataSource(), h2Server());
     }
 
+    @Bean
+    public CommandLineRunner connectionTestRunner() {
+        return new ConnectionTestRunner(dataSource());
+    }
+
     @Bean(initMethod = "start", destroyMethod = "stop")
     public H2Server h2Server() {
         return new H2Server().setPort(9092);

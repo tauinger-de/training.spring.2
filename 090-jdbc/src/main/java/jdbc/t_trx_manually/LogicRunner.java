@@ -30,7 +30,7 @@ public class LogicRunner implements CommandLineRunner {
 
         //
         try {
-            accountingService.insertAccount("090u", 100);
+            accountingService.insertAccount("090t", 100);
             trxMgr.commit(trxStatus);
         } catch (Throwable t) {
             // rollback in case of problem
