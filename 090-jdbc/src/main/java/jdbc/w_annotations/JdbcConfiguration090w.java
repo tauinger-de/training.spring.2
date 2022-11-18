@@ -1,7 +1,7 @@
 package jdbc.w_annotations;
 
+import jdbc.AccountingService;
 import jdbc.JdbcConfiguration;
-import jdbc.c_jdbctemplate.JdbcTemplateAccountingService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.support.TransactionTemplate;
@@ -16,7 +16,7 @@ public class JdbcConfiguration090w extends JdbcConfiguration {
 
     @Override
     @Bean
-    public JdbcTemplateAccountingService accountingService() {
+    public AccountingService accountingService() {
         return new TransactionalAccountingService(dataSource());
     }
 }

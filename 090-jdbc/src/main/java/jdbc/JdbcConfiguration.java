@@ -14,7 +14,7 @@ import javax.sql.DataSource;
 public class JdbcConfiguration {
 
     @Bean
-    public JdbcTemplateAccountingService accountingService() {
+    public AccountingService accountingService() {
         return new JdbcTemplateAccountingService(dataSource());
     }
 
