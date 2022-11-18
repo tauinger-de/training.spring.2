@@ -1,11 +1,13 @@
 package jdbc;
 
 import core.h2.H2Server;
+import core.h2.ScriptRunner;
 import core.jdbc.ConnectionTestRunner;
 import jdbc.c_jdbctemplate.JdbcTemplateAccountingService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
@@ -21,7 +23,7 @@ public class JdbcConfiguration {
 
     @Bean
     public CommandLineRunner schemaScriptRunner() {
-        return new SchemaScriptRunner(dataSource(), h2Server());
+        return new ScriptRunner(dataSource(), h2Server(), new ClassPathResource("schema.sql"));
     }
 
     @Bean
