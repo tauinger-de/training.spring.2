@@ -3,6 +3,9 @@ package accounting;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+/**
+ * This is a simple UNIT test.
+ */
 public class AccountTest {
 
     /**
