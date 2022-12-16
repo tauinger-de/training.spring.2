@@ -1,6 +1,6 @@
 package jdbc.v_trxproxyfactorybean;
 
-import jdbc.c_jdbctemplate.JdbcTemplateAccountingService;
+import jdbc.AccountingService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -9,9 +9,9 @@ import org.springframework.stereotype.Component;
 @Order(100)
 public class LogicRunner implements CommandLineRunner {
 
-    private final JdbcTemplateAccountingService accountingService;
+    private final AccountingService accountingService;
 
-    public LogicRunner(JdbcTemplateAccountingService accountingService) {
+    public LogicRunner(AccountingService accountingService) {
         this.accountingService = accountingService;
     }
 
