@@ -2,13 +2,16 @@
 
 Basis der Übung ist das Modul `exrc-accounting`.
 
+
 ## 1) Springify
 
 Stellen Sie die bestehende Anwendung um auf Spring Beans.
 
+
 ## 2) Jdbc Support
 
 Schreiben Sie die Datenbank-Zugriffe um auf eine von Spring unterstützte Technologie.
+
 
 ## 3) Neue Logik
 
@@ -16,24 +19,24 @@ Lassen Sie Ihre Anwendung folgendes Interface implementieren:
 
 ````java
 public interface BankingApi {
-    void deposit(int accountNumber, int amount);
+    void deposit(String accountNumber, int amount) throws MissingAccountException;
 
-    void withdraw(int accountNumber, int amount);
+    void withdraw(String accountNumber, int amount) throws MissingAccountException, InsufficientFundsException;
 
-    void transfer(int fromAccountNumber, int toAccountNumber, int amount);
+    void transfer(String fromAccountNumber, String toAccountNumber, int amount) throws MissingAccountException, InsufficientFundsException;
 }
 
 ````
 
-Details:
+Implementieren Sie die `transfer()` so, dass erst ein deposit, dann ein withdraw
+aufgerufen wird.
 
-- `deposit()` und `withdraw()` sollen eine Exception werfen, wenn es den Account nicht gibt
-- implementieren Sie die `transfer()` so, dass erst ein deposit, dann ein withdraw
-  aufgerufen wird
+Führen Sie eine Überweisung durch.
 
-Welches Problem tritt auf, wenn man auf einen Account überweist, den es gar nicht gibt?
+Welches Problem tritt auf, wenn man mehr Geld überweist, als der zahlende Account aufweist?
+
 
 ## 4) Trx
 
 Ergänzen Sie die Anwendung um Transaktionen, sodass ein Fehler in der
-`transfer()` Methode keinen inkonsistenten Zustand hinterlässt
+`transfer()` Methode keinen inkonsistenten Zustand hinterlässt.
