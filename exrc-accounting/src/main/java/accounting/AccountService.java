@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 @Service
 public class AccountService {
@@ -17,35 +18,40 @@ public class AccountService {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    public void insertAccount(String accountNumber, int balance) {
-        System.out.printf("About to insert account with number '%s' and balance %d\n", accountNumber, balance);
-        var rowCount = jdbcTemplate.update(
-                "INSERT INTO accounts VALUES (?, ?)",
-                accountNumber, balance
-        );
+    public void insertAccount(Account account) {
+        System.out.printf("About to insert account with number '%s' and balance %d\n", account.getNumber(), account.getBalance());
+        var rowCount = jdbcTemplate.update("INSERT INTO accounts VALUES (?, ?)", account.getNumber(), account.getBalance());
         System.out.printf("Added %d row(s)\n", rowCount);
     }
 
-    public void insertAccountWithFault(String accountNumber, int balance) {
-        jdbcTemplate.update(
-                "INSERT INTO accounts VALUES (?, ?)",
-                accountNumber, balance
-        );
-        throw new RuntimeException("Uh oh, something went wrong!");
+    public void updateAccount(Account account) {
+        System.out.printf("About to update account with number '%s'\n", account.getNumber());
+        var rowCount = jdbcTemplate.update("UPDATE accounts SET balance = ? WHERE number = ?", account.getBalance(), account.getNumber());
+        System.out.printf("Updated %d row(s)\n", rowCount);
     }
 
-    public Account getAccount(String accountNumber) {
-        var accountList = jdbcTemplate.query(
-                "SELECT number, balance FROM accounts WHERE number = ?",
-                new AccountRowMapper(),
-                accountNumber
-        );
+    public void deleteAccount(Account account) {
+        System.out.printf("About to delete account with number '%s'\n", account.getNumber());
+        var rowCount = jdbcTemplate.update("DELETE FROM accounts WHERE number = ?", account.getNumber());
+        System.out.printf("Deleted %d row(s)\n", rowCount);
+    }
+
+    public Account findAccount(String accountNumber) {
+        var accountList = jdbcTemplate.query("SELECT number, balance FROM accounts WHERE number = ?", new AccountRowMapper(), accountNumber);
         if (accountList.size() == 0) {
             return null;
         } else {
             return accountList.get(0);
         }
     }
+
+    public List<Account> findAllAccounts() {
+        return jdbcTemplate.query("SELECT number, balance FROM accounts", new AccountRowMapper());
+    }
+
+    //
+    // --- inner classes ---
+    //
 
     private static class AccountRowMapper implements RowMapper<Account> {
         @Override
