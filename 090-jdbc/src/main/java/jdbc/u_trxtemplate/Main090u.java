@@ -2,11 +2,8 @@ package jdbc.u_trxtemplate;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Configuration;
 
 @SpringBootApplication
-@Configuration
-//@Import(CoreCtxConfiguration.class)
 public class Main090u {
 
     public static void main(String[] args) {
