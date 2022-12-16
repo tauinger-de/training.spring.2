@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Service
-public class AccountService {
+public class AccountService implements BankingApi {
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -39,7 +39,7 @@ public class AccountService {
     public Account findAccount(String accountNumber) {
         var accountList = jdbcTemplate.query("SELECT number, balance FROM accounts WHERE number = ?", new AccountRowMapper(), accountNumber);
         if (accountList.size() == 0) {
-            return null;
+            throw new MissingAccountException(accountNumber);
         } else {
             return accountList.get(0);
         }
@@ -47,6 +47,34 @@ public class AccountService {
 
     public List<Account> findAllAccounts() {
         return jdbcTemplate.query("SELECT number, balance FROM accounts", new AccountRowMapper());
+    }
+
+    @Override
+    public void deposit(String accountNumber, int amount) {
+        System.out.printf("Depositing %d € for account '%s'\n", amount, accountNumber);
+        Account account = findAccount(accountNumber);
+
+        account.setBalance(account.getBalance() + amount);
+        updateAccount(account);
+    }
+
+    @Override
+    public void withdraw(String accountNumber, int amount) {
+        System.out.printf("Withdrawing %d € from account '%s'\n", amount, accountNumber);
+        Account account = findAccount(accountNumber);
+
+        if (account.getBalance() < amount) {
+            throw new InsufficientFundsException(accountNumber);
+        }
+
+        account.setBalance(account.getBalance() - amount);
+        updateAccount(account);
+    }
+
+    @Override
+    public void transfer(String fromAccountNumber, String toAccountNumber, int amount) {
+        deposit(toAccountNumber, amount);
+        withdraw(fromAccountNumber, amount);
     }
 
     //

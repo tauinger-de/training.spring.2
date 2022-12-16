@@ -3,8 +3,6 @@ package accounting;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import java.sql.SQLException;
-
 @Component
 public class LogicRunner implements CommandLineRunner {
 
@@ -15,7 +13,7 @@ public class LogicRunner implements CommandLineRunner {
     }
 
     @Override
-    public void run(String... args) throws SQLException {
+    public void run(String... args) {
         // create two accounts
         accountService.insertAccount(new Account("4711"));
         accountService.insertAccount(new Account("4712"));
@@ -25,10 +23,12 @@ public class LogicRunner implements CommandLineRunner {
         account1.setBalance(account1.getBalance() + 50);
         accountService.updateAccount(account1);
 
-        // set balance on #2
-        final Account account2 = accountService.findAccount("4712");
-        account2.setBalance(account2.getBalance() + 6000);
-        accountService.updateAccount(account2);
+        // transfer
+        try {
+            accountService.transfer("4711", "4712", 60);
+        } catch (InsufficientFundsException e) {
+            System.out.printf("Transfer FAILED: %s\n", e.getMessage());
+        }
 
         // print each account
         for (final Account account : accountService.findAllAccounts()) {
