@@ -17,15 +17,16 @@ public class AccountService implements BankingApi {
 
     private final TransactionTemplate trxTemplate;
 
-    public AccountService(DataSource dataSource, TransactionTemplate trxTemplate) {
+    private final AccountDao accountDao;
+
+    public AccountService(DataSource dataSource, TransactionTemplate trxTemplate, AccountDao accountDao) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
         this.trxTemplate = trxTemplate;
+        this.accountDao = accountDao;
     }
 
     public void insertAccount(Account account) {
-        System.out.printf("About to insert account with number '%s' and balance %d\n", account.getNumber(), account.getBalance());
-        var rowCount = jdbcTemplate.update("INSERT INTO accounts VALUES (?, ?)", account.getNumber(), account.getBalance());
-        System.out.printf("Added %d row(s)\n", rowCount);
+        accountDao.saveAccount(account);
     }
 
     public void updateAccount(Account account) {

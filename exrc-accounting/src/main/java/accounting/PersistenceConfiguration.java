@@ -11,6 +11,8 @@ import org.springframework.context.annotation.DependsOn;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.sql.DataSource;
 
 @Configuration
@@ -38,4 +40,10 @@ public class PersistenceConfiguration {
     public CommandLineRunner scriptRunner(DataSource dataSource, H2Server h2Server) {
         return new ScriptRunner(dataSource, h2Server, new ClassPathResource("create.sql"));
     }
+
+    @Bean
+    public EntityManagerFactory entityManagerFactory() {
+        return Persistence.createEntityManagerFactory("accounting");
+    }
+
 }
