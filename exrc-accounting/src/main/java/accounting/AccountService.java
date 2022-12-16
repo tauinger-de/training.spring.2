@@ -3,6 +3,7 @@ package accounting;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import javax.sql.DataSource;
 import java.sql.ResultSet;
@@ -14,8 +15,11 @@ public class AccountService implements BankingApi {
 
     private final JdbcTemplate jdbcTemplate;
 
-    public AccountService(DataSource dataSource) {
+    private final TransactionTemplate trxTemplate;
+
+    public AccountService(DataSource dataSource, TransactionTemplate trxTemplate) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
+        this.trxTemplate = trxTemplate;
     }
 
     public void insertAccount(Account account) {
@@ -73,8 +77,10 @@ public class AccountService implements BankingApi {
 
     @Override
     public void transfer(String fromAccountNumber, String toAccountNumber, int amount) {
-        deposit(toAccountNumber, amount);
-        withdraw(fromAccountNumber, amount);
+        trxTemplate.executeWithoutResult(trxStatus -> {
+            deposit(toAccountNumber, amount);
+            withdraw(fromAccountNumber, amount);
+        });
     }
 
     //
