@@ -27,6 +27,8 @@ public class PersistenceConfiguration {
         return new DriverManagerDataSource(connectionUrl);
     }
 
+    // we don't even need to declare a TransactionTemplate bean since Spring Boot autoconfiguration does this for us
+
     @Bean
     public CommandLineRunner connectionTestRunner(DataSource dataSource) {
         return new ConnectionTestRunner(dataSource);
