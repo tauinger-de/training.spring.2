@@ -21,7 +21,7 @@ public class LogicRunner implements CommandLineRunner {
         // set balance on #1
         final Account account1 = accountService.findAccount("4711");
         account1.setBalance(account1.getBalance() + 50);
-        accountService.updateAccount(account1);
+//        accountService.updateAccount(account1);
 
         // transfer
         try {

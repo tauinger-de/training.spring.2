@@ -25,4 +25,8 @@ public class AccountDao {
             entityManager.persist(account);
         });
     }
+
+    public Account findById(String accountNumber) {
+        return entityManager.find(Account.class, accountNumber);
+    }
 }

@@ -26,13 +26,14 @@ public class AccountService implements BankingApi {
     }
 
     public void insertAccount(Account account) {
+        System.out.printf("About to insert account with number '%s' and balance %d €\n",
+                account.getNumber(), account.getBalance());
         accountDao.saveAccount(account);
     }
 
     public void updateAccount(Account account) {
         System.out.printf("About to update account with number '%s'\n", account.getNumber());
-        var rowCount = jdbcTemplate.update("UPDATE accounts SET balance = ? WHERE number = ?", account.getBalance(), account.getNumber());
-        System.out.printf("Updated %d row(s)\n", rowCount);
+        accountDao.saveAccount(account);
     }
 
     public void deleteAccount(Account account) {
@@ -42,12 +43,7 @@ public class AccountService implements BankingApi {
     }
 
     public Account findAccount(String accountNumber) {
-        var accountList = jdbcTemplate.query("SELECT number, balance FROM accounts WHERE number = ?", new AccountRowMapper(), accountNumber);
-        if (accountList.size() == 0) {
-            throw new MissingAccountException(accountNumber);
-        } else {
-            return accountList.get(0);
-        }
+        return accountDao.findById(accountNumber);
     }
 
     public List<Account> findAllAccounts() {
@@ -60,7 +56,6 @@ public class AccountService implements BankingApi {
         Account account = findAccount(accountNumber);
 
         account.setBalance(account.getBalance() + amount);
-        updateAccount(account);
     }
 
     @Override
@@ -73,7 +68,6 @@ public class AccountService implements BankingApi {
         }
 
         account.setBalance(account.getBalance() - amount);
-        updateAccount(account);
     }
 
     @Override
